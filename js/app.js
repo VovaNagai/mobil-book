@@ -43,11 +43,12 @@ class AppMain {
 			mobilPhone: '+(380)-99-0000388',
 		}];
 		this.sorting = [0,1];
+		this.filter = '';
     }
 	//
 	render(){
 		let tbx = '';
-		let su = Array.from(this.users);
+		let su = Array.from(this.users).filter(e => '' == this.filter || -1 != e.name.toLowerCase().indexOf(this.filter.toLowerCase()) || -1 != e.lastName.toLowerCase().indexOf(this.filter.toLowerCase()));
 		if('undefined' != typeof arguments[0] && 0 <= arguments[0] && 2 >= arguments[0]){
 			let z = arguments[0];
 			let x = (this.sorting[0] == z && !this.sorting[1]) ? 1 : -1;
@@ -62,11 +63,11 @@ class AppMain {
 		let tbl = '';
 		this.tb.forEach(e => tbl += `<th>${e}</th>`);
 		tbl = `<thead><tr>${tbl}</tr></thead><tbody>${tbx}</tbody>`;
-		if('undefined' != typeof arguments[0] && 0 <= arguments[0] && 2 >= arguments[0]){
+		if('undefined' != typeof arguments[0] && -1 <= arguments[0] && 2 >= arguments[0]){
 			document.getElementsByTagName('table')[0].innerHTML = tbl;
 		}
 		else
-			document.body.innerHTML += `<main><div class="container"><form class="form-inline search-form"><div class="form-group"><label class="sr-only" for="search">Search</label><input type="text" class="form-control" id= "search" placeholder="Search"></div></form><table class="table table-hover contacts">${tbl}</table></div></main>`;
+			document.body.innerHTML += `<main><div class="container"><form class="form-inline search-form"><div class="form-group"><label class="sr-only" for="search">Search</label><input type="text" id="search" class="form-control" id= "search" placeholder="Search" autocomplete="off"></div></form><table class="table table-hover contacts">${tbl}</table></div></main>`;
 		//
 		let zzxfwd = this;
 		setTimeout(function(){
@@ -75,8 +76,13 @@ class AppMain {
 					zzxfwd.render(i);
 				};
 			});
+			document.getElementById('search').addEventListener('keyup',function(){
+				zzxfwd.filter = this.value;
+				zzxfwd.render(-1);
+			});
 		},0);
 	}
+
 }
 
 const xh = new AppHeader();

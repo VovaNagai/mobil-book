@@ -35,6 +35,16 @@ class KeypadMain {
 	}
 }
 
+window.onload = function(){
+	let kpnum = sessionStorage.getItem('keypad_number');
+	if(kpnum){
+		Array.from(document.getElementsByTagName('span')).forEach(f => {
+			if ('undefined' != typeof f.className && 'numbers' == f.className) {
+				f.innerHTML = kpnum;
+			}
+		});
+	}
+};
 
 document.body.addEventListener('keydown', n => {
 	if ((n.keyCode >=48 && n.keyCode <=57) || n.keyCode == 42 || n.keyCode == 51) {
@@ -43,6 +53,14 @@ document.body.addEventListener('keydown', n => {
 		trimNum();
 	}
 });
+
+function saveData(){
+	Array.from(document.getElementsByTagName('span')).forEach(f => {
+		if ('undefined' != typeof f.className && 'numbers' == f.className) {
+			sessionStorage.setItem('keypad_number',f.innerHTML);
+		}
+	});
+}
 
 function inputNum(char) {
 	Array.from(document.getElementsByTagName('span')).forEach(f => {
@@ -59,6 +77,7 @@ function inputNum(char) {
 				return;
 			}
 			f.innerHTML += char;
+			saveData();
 		}
 	});
 }
@@ -66,6 +85,7 @@ function trimNum(){
 	Array.from(document.getElementsByTagName('span')).forEach(g => {
 		if('undefined' != typeof g.className && 'numbers' == g.className){
 			g.innerHTML = g.innerHTML.slice(0,-1);
+			saveData();
 		}
 	});
 }
