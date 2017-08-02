@@ -1,1 +1,1 @@
-# mobil-book
+PhoneBookApplication: example javascript project for js-summer
