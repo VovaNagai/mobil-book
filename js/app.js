@@ -1,3 +1,4 @@
+//
 // WebDB: AJAX-driven w3 API storage interface layer
 
 class WebDB {
@@ -509,4 +510,3 @@ class PhoneBookApplication {
 // ...
 // const app = new PhoneBookApplication(api_url);
 
-// $ 2017 MR $
